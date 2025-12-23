@@ -15,3 +15,7 @@ You're going to need to need to use an SBARDEF compliant sourceport like the dev
 Build it in the same way you build a rust application in your environment of choice, or [I have a Windows precompiled release available](https://github.com/lizzieshinkicker/cacoco/releases).
 
 ...Yeah, I'll write a better landing page soon, I promise! ^^;;
+
+---
+
+Thank you to [NightFright's great work on their SBARDEF mod for Woof for inspiration](https://github.com/NightFright2k19/doom_sbardef), and many many others to help crack the spec sheet. I hope this tool makes development easier.
