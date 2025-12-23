@@ -61,6 +61,9 @@ pub fn draw_viewport(
 
     let is_dragging = viewport_res.dragged_by(egui::PointerButton::Primary);
 
+    let is_viewport_clicked = viewport_res.contains_pointer()
+        && ui.input(|i| i.pointer.button_down(egui::PointerButton::Primary));
+
     if is_dragging && !selection.is_empty() {
         if egui::DragAndDrop::payload::<Vec<String>>(ui.ctx()).is_none() {
             if viewport_res.drag_started() {
@@ -147,6 +150,7 @@ pub fn draw_viewport(
             pass: RenderPass::Background,
             proj: &proj,
             is_dragging,
+            is_viewport_clicked,
         };
 
         for (idx, child) in bar.children.iter().enumerate() {

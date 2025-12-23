@@ -33,6 +33,7 @@ pub struct RenderContext<'a> {
     pub pass: RenderPass,
     pub proj: &'a projection::ViewportProjection,
     pub is_dragging: bool,
+    pub is_viewport_clicked: bool,
 }
 
 impl<'a> RenderContext<'a> {
@@ -103,7 +104,13 @@ pub fn draw_element_wrapper(
         Element::Canvas(c) => canvas::draw_canvas(ctx, c, pos, alpha),
         Element::Graphic(g) => graphic::draw_graphic(ctx, g, pos, alpha),
         Element::Animation(a) => animation::draw_animation(ctx, a, pos, alpha),
-        Element::Face(f) => face::draw_face(ctx, f, pos, alpha, is_selected_branch && ctx.is_dragging),
+        Element::Face(f) => face::draw_face(
+            ctx,
+            f,
+            pos,
+            alpha,
+            is_selected_branch && (ctx.is_dragging || ctx.is_viewport_clicked),
+        ),
         Element::FaceBackground(fb) => face::draw_face_background(ctx, fb, pos, alpha),
         Element::Number(n) => text::draw_number(ctx, n, pos, false, alpha),
         Element::Percent(p) => text::draw_number(ctx, p, pos, true, alpha),
