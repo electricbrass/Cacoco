@@ -1,6 +1,7 @@
 use std::fs;
 use serde::{Serialize, Deserialize};
 use std::collections::VecDeque;
+use directories::ProjectDirs;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct AppConfig {
@@ -14,19 +15,33 @@ pub struct AppConfig {
 impl AppConfig {
     const FILENAME: &'static str = "cacoco_config.json";
 
+    fn get_config_dir() -> Option<std::path::PathBuf> {
+        ProjectDirs::from(
+            "io.github",
+            "lizzieshinkicker",
+            "cacoco"
+        ).map(|proj_dirs| proj_dirs.config_local_dir().to_path_buf())
+    }
+
     pub fn load() -> Self {
-        if let Ok(content) = fs::read_to_string(Self::FILENAME) {
-            if let Ok(cfg) = serde_json::from_str(&content) {
-                return cfg;
+        if let Some(config_dir) = Self::get_config_dir()
+        {
+            if let Ok(content) = fs::read_to_string(config_dir.join(Self::FILENAME)) {
+                if let Ok(cfg) = serde_json::from_str(&content) {
+                    return cfg;
+                }
             }
         }
         Self::default()
     }
 
     pub fn save(&self) {
-        if let Ok(content) = serde_json::to_string_pretty(self) {
-            let _ = fs::write(Self::FILENAME, content);
-            println!("Config saved to {}", Self::FILENAME);
+        if let Some(config_dir) = Self::get_config_dir()
+        {
+            if let Ok(content) = serde_json::to_string_pretty(self) {
+                let _ = fs::write(config_dir.join(Self::FILENAME), content);
+                println!("Config saved to {}", Self::FILENAME);
+            }
         }
     }
 }
