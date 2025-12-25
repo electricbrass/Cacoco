@@ -26,6 +26,11 @@ impl AppConfig {
     pub fn load() -> Self {
         if let Some(config_dir) = Self::get_config_dir()
         {
+            if let Err(e) = fs::create_dir_all(&config_dir) {
+                eprintln!("Failed to create config directory: {}", e);
+                return Self::default();
+            }
+
             if let Ok(content) = fs::read_to_string(config_dir.join(Self::FILENAME)) {
                 if let Ok(cfg) = serde_json::from_str(&content) {
                     return cfg;
