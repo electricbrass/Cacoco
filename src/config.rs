@@ -25,12 +25,9 @@ impl AppConfig {
 
     pub fn load() -> Self {
         if let Some(config_dir) = Self::get_config_dir()
-        {
-            if let Ok(content) = fs::read_to_string(config_dir.join(Self::FILENAME)) {
-                if let Ok(cfg) = serde_json::from_str(&content) {
-                    return cfg;
-                }
-            }
+            && let Ok(content) = fs::read_to_string(config_dir.join(Self::FILENAME))
+            && let Ok(cfg) = serde_json::from_str(&content) {
+            return cfg;
         }
         Self::default()
     }
