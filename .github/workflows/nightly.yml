@@ -6,7 +6,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 3 * * *'
   workflow_dispatch:
 
 env:
@@ -142,7 +142,7 @@ jobs:
         make_latest: false
         draft: false
         overwrite_files: true
-        generate_release_notes: false
+        generate_release_notes: true
         body: ""
         files: |
           artifacts/**/*
