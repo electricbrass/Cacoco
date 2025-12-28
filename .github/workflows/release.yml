@@ -144,7 +144,7 @@ jobs:
     - name: Create AppImage
       env:
         LD_BIN: ${{ steps.install-linuxdeploy.outputs.linuxdeploy }}
-        LDAI_UPDATE_INFORMATION: "gh-releases-zsync|${{ github.repository_owner }}|Cacoco|${{ env.UPDATE_TAG }}|cacoco-*-linux.AppImage.zsync"
+        LDAI_UPDATE_INFORMATION: "gh-releases-zsync|${{ github.repository_owner }}|Cacoco|${{ env.UPDATE_TAG }}|cacoco-*-linux-x86_64.AppImage.zsync"
         LDAI_VERSION: ${{ env.APPIMAGE_VERSION }}
         LDAI_OUTPUT: ${{ env.ARTIFACT_NAME }}
       run: |
